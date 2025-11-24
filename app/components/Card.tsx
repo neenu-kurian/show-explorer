@@ -9,6 +9,7 @@ const Card = ({name, rating, image}: Show) => {
           src={image?.original || ''} 
           alt={name || 'No image available'} 
           className="w-full h-80 min-h-80 object-cover"
+          unoptimized={true}
           width={250}
           height={250}
         />

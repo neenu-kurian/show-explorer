@@ -38,6 +38,7 @@ const MovieDetail = () => {
           className="relative md:max-w-[350px] rounded-xl overflow-hidden shadow-lg mx-auto shrink-0"
           width={550}
           height={550}
+          unoptimized={true}
         />
         <div className="absolute left-4 top-14">
           <MovieRating rating={show?.rating?.average ?? 0} />
