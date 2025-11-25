@@ -18,6 +18,11 @@ export type CastMember = {
   };
 };
 
+export type ErrorProps = {
+  error: Error;
+  reset: () => void;
+};
+
 export type SearchResult = {
   score: number;
   show: Show;
