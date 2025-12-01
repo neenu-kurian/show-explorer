@@ -86,6 +86,6 @@ export interface SortOption {
 }
 
 export interface SortDropdownProps {
-  modelValue?: string;
   options: SortOption[];
+  onDropDownChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }

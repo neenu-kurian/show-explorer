@@ -6,13 +6,16 @@ import { Show } from "../types/index.ts";
 import { useObserverRef } from "../hooks/useObserverRef.ts";
 import Link from "next/link";
 import SearchInput from "./SearchInput.tsx";
-import { categorizeShows } from "../utilities/normaliser.ts";
+import { categorizeShows, sortShows } from "../utilities/normaliser.ts";
 import { debounce } from "../utilities/debounce.ts";
+import DropDown from "./DropDown.tsx";
+import { sortOptions } from "../constants.ts";
 
 const HomeClient = ({ shows }: { shows: Show[] }) => {
   const [itemsToShow, setItemsToShow] = useState(4);
   const [searchText, setSearchText] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [sortOption, setSortOption] = useState("rating-desc");
 
   const setObserverRef = useObserverRef(() => {
     setItemsToShow((prev) => prev + 4);
@@ -29,13 +32,23 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
     error: searchError,
   } = useSearchShows(debouncedQuery);
 
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(event.currentTarget.value);
+  };
+
+  const categorisedShows = useMemo(() => categorizeShows(shows), [shows]);
+
+  const sortedShows = useMemo(
+    () => sortShows(categorisedShows, sortOption),
+    [categorisedShows, sortOption]
+  );
+
   const showsToDisplay = useMemo(() => {
-    if (!shows || !shows.length) {
+    if (!sortedShows || Object.keys(sortedShows).length === 0) {
       return [];
     }
-    const showsByGenre = categorizeShows(shows);
-    return Object.entries(showsByGenre).slice(0, itemsToShow);
-  }, [shows, itemsToShow]);
+    return Object.entries(sortedShows).slice(0, itemsToShow);
+  }, [sortedShows, itemsToShow]);
 
   if (searchError) {
     return (
@@ -77,7 +90,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
   };
 
   const renderShowsByGenre = () => {
-    if (!showsToDisplay || showsToDisplay.length === 0 || !shows) return null;
+    if (!showsToDisplay || showsToDisplay.length === 0) return null;
 
     return (
       <div className="flex flex-col gap-8">
@@ -107,10 +120,13 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
           Movie Explorer
         </h1>
-        <SearchInput
-          searchText={searchText}
-          handleUpdate={updateSearchResults}
-        />
+        <div className="flex justify-between">
+          <SearchInput
+            searchText={searchText}
+            handleUpdate={updateSearchResults}
+          />
+          <DropDown options={sortOptions} onDropDownChange={handleSortChange} />
+        </div>
         {searchText ? renderSearchResults() : renderShowsByGenre()}
         <div
           ref={setObserverRef}

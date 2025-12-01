@@ -16,6 +16,7 @@ export function categorizeShows(
       showsByCategory[genre].push(show);
     });
   });
+  sortShows(showsByCategory);
   return showsByCategory;
 }
 
@@ -27,14 +28,15 @@ export function normaliseSearchResults(
 
 export function sortShows(
   showsToSort: CategorizedShows,
-  sortBy: string
+  sortBy: string = 'rating-desc'
 ): CategorizedShows {
+  const sorted: CategorizedShows = {};
   Object.entries(showsToSort).forEach(([genre, shows]) => {
-    showsToSort[genre] = [...shows].sort((show1, show2) => {
+    sorted[genre] = [...shows].sort((show1, show2) => {
       const ratingA = show1.rating?.average || 0;
       const ratingB = show2.rating?.average || 0;
       return sortBy === "rating-asc" ? ratingA - ratingB : ratingB - ratingA;
     });
   });
-  return showsToSort;
+  return sorted;
 }
