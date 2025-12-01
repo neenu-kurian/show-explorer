@@ -1,5 +1,5 @@
 import { API_URL } from "./constants";
-import Home from "./home/page";
+import HomeClient from "./components/HomeClient";
 import https from "https";
 import fetch from "node-fetch";
 import { Show } from "./types";
@@ -15,7 +15,7 @@ const HomePage = async () => {
   }
   const data = await response.json() as Show[];
 
-  return <Home shows={data} />;
+  return <HomeClient shows={data} />;
 };
 
 export default HomePage;

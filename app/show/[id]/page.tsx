@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { useShowDetails } from "../../queries/index.ts";
 import MovieRating from "../../components/MovieRating.tsx";
 import InfoChip from "../../components/InfoChip.tsx";
@@ -10,7 +9,7 @@ import Image from "next/image";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const { show, error, isLoading } = useShowDetails(id);
+  const { show, error, isLoading } = useShowDetails(id as string);
 
   if (error) {
     return (
@@ -29,18 +28,20 @@ const MovieDetail = () => {
   return (
     <div className="relative p-5 md:flex gap-6">
       <div className="relative">
-        <div className="inline-flex ml-3 items-center gap-2 font-medium my-3 cursor-pointer bg-none border-none p-0 text-base text-black">
+        <div className="inline-flex ml-3 items-center gap-2 font-medium my-5 cursor-pointer bg-none border-none p-0 text-base text-black">
           <BackButton />
         </div>
-        <Image
-          src={show.image?.original || ''}
-          alt={show.name}
-          className="relative md:max-w-[350px] rounded-xl overflow-hidden shadow-lg mx-auto shrink-0"
-          width={550}
-          height={550}
-          unoptimized={true}
-        />
-        <div className="absolute left-4 top-14">
+        <div className="relative w-[350px] h-[550px]">
+          <Image
+            src={show.image?.original || ""}
+            alt={show.name}
+            priority={true}
+            className="rounded-xl overflow-hidden shadow-lg mx-left shrink-0"
+            fill
+            unoptimized={true}
+          />
+        </div>
+        <div className="absolute left-4 top-20">
           <MovieRating rating={show?.rating?.average ?? 0} />
         </div>
       </div>
@@ -57,9 +58,9 @@ const MovieDetail = () => {
           {show.status && <InfoChip label="Status" value={show.status} />}
         </div>
         {show.genres?.length && (
-          <div className="flex gap-2 mb-4 flex-wrap">
+          <div className="flex gap-2 mb-4 flex-wrap font-bold">
             {show.genres.map((eachGenre, index) => (
-              <InfoChip key={index} label={eachGenre} />
+              <InfoChip key={index} label={eachGenre}/>
             ))}
           </div>
         )}

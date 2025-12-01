@@ -1,37 +1,40 @@
-"use client"
-import { useEffect, useState } from "react";
-import Card from "../components/Card";
+"use client";
+import { useCallback, useMemo, useState } from "react";
+import Card from "./Card.tsx";
 import { useSearchShows } from "../queries/index.ts";
 import { Show } from "../types/index.ts";
 import { useObserverRef } from "../hooks/useObserverRef.ts";
 import Link from "next/link";
-import SearchInput from "../components/SearchInput";
+import SearchInput from "./SearchInput.tsx";
 import { categorizeShows } from "../utilities/normaliser.ts";
+import { debounce } from "../utilities/debounce.ts";
 
-const Home = ({shows}: {shows: Show[]}) => {
+const HomeClient = ({ shows }: { shows: Show[] }) => {
   const [itemsToShow, setItemsToShow] = useState(4);
-  const [showsToDisplay, setShowsToDisplay] = useState<[string, Show[]][]>([]);
   const [searchText, setSearchText] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
 
   const setObserverRef = useObserverRef(() => {
     setItemsToShow((prev) => prev + 4);
   });
 
-   const updateSearchResults = (searchInput: string) => {
-    setSearchText(searchInput);
-  };
+  const updateSearchResults = useCallback((query: string) => {
+    setSearchText(query.trim() ? query : "");
+    debounce(() => setDebouncedQuery(query), 500);
+  }, []);
 
   const {
     searchResults,
     isLoading: isSearchLoading,
     error: searchError,
-  } = useSearchShows(searchText);
+  } = useSearchShows(debouncedQuery);
 
-  useEffect(() => {
-    const showsByGenre = categorizeShows(shows);
-    if (showsByGenre) {
-      setShowsToDisplay(Object.entries(showsByGenre).slice(0, itemsToShow));
+  const showsToDisplay = useMemo(() => {
+    if (!shows || !shows.length) {
+      return [];
     }
+    const showsByGenre = categorizeShows(shows);
+    return Object.entries(showsByGenre).slice(0, itemsToShow);
   }, [shows, itemsToShow]);
 
   if (searchError) {
@@ -41,24 +44,31 @@ const Home = ({shows}: {shows: Show[]}) => {
       </div>
     );
   }
-  if (isSearchLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-xl text-gray-600">Loading...</p>
-      </div>
-    );
-  }
 
   const renderSearchResults = () => {
-    if (!searchResults || searchResults.length === 0) return null;
+    if (!searchResults) return null;
+    if (searchResults.length === 0)
+      return (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-xl text-gray-600">No results found</p>
+        </div>
+      );
+
+    if (isSearchLoading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-xl text-gray-600">Searching...</p>
+        </div>
+      );
+    }
 
     return (
       <div className="mt-4">
         <h2 className="text-2xl font-bold mb-4">Search Results</h2>
-        <div className="flex flex-row gap-4 overflow-x-scroll">
+        <div className="flex gap-5 flex-wrap">
           {searchResults.map((show: Show) => (
             <Link href={`/show/${show.id}`} key={show.id}>
-              <Card {...show} />
+              <Card {...show} index={show.id} />
             </Link>
           ))}
         </div>
@@ -67,17 +77,21 @@ const Home = ({shows}: {shows: Show[]}) => {
   };
 
   const renderShowsByGenre = () => {
-    if (!showsToDisplay || showsToDisplay.length === 0) return null;
+    if (!showsToDisplay || showsToDisplay.length === 0 || !shows) return null;
 
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         {showsToDisplay.map(([genre, shows]) => (
           <div key={genre}>
             <h3 className="text-2xl font-bold mb-4">{genre}</h3>
-            <div className="flex flex-row gap-4 overflow-x-scroll">
+            <div className="flex flex-row gap-6 overflow-x-scroll">
               {shows?.map((eachShow: Show) => (
-                <Link href={`/show/${eachShow.id}`} key={eachShow.id}>
-                  <Card {...eachShow} />
+                <Link
+                  href={`/show/${eachShow.id}`}
+                  key={eachShow.id}
+                  className="relative"
+                >
+                  <Card {...eachShow} index={eachShow.id} />
                 </Link>
               ))}
             </div>
@@ -93,14 +107,18 @@ const Home = ({shows}: {shows: Show[]}) => {
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
           Movie Explorer
         </h1>
-        <SearchInput searchText={searchText} handleUpdate={updateSearchResults} />
+        <SearchInput
+          searchText={searchText}
+          handleUpdate={updateSearchResults}
+        />
         {searchText ? renderSearchResults() : renderShowsByGenre()}
         <div
           ref={setObserverRef}
           className="h-16 w-full bg-transparent border-0"
+          aria-hidden="true"
         ></div>
       </div>
     </div>
   );
 };
-export default Home;
+export default HomeClient;
