@@ -6,7 +6,6 @@ const SearchInput = ({ handleUpdate, searchText }: { handleUpdate: (query: strin
     >
       <input
         onChange={(e) => handleUpdate(e.currentTarget?.value)}
-        onInput={(e) => handleUpdate(e.currentTarget?.value)}
         name="search-input"
         type="search"
         value={searchText}
