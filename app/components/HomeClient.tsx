@@ -7,24 +7,25 @@ import { useObserverRef } from "../hooks/useObserverRef.ts";
 import Link from "next/link";
 import SearchInput from "./SearchInput.tsx";
 import { categorizeShows, sortShows } from "../utilities/normaliser.ts";
-import { debounce } from "../utilities/debounce.ts";
+
 import DropDown from "./DropDown.tsx";
 import { sortOptions } from "../constants.ts";
+import { useDebouncedValue } from "../hooks/useDebounce.ts";
 
 const HomeClient = ({ shows }: { shows: Show[] }) => {
   const [itemsToShow, setItemsToShow] = useState(4);
   const [searchText, setSearchText] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [sortOption, setSortOption] = useState("rating-desc");
 
   const setObserverRef = useObserverRef(() => {
     setItemsToShow((prev) => prev + 4);
   });
 
-  const updateSearchResults = useCallback((query: string) => {
+  const debouncedQuery = useDebouncedValue(searchText, 500);
+
+  const updateSearchResults = (query: string) => {
     setSearchText(query.trim() ? query : "");
-    debounce(() => setDebouncedQuery(query), 500);
-  }, []);
+  };
 
   const {
     searchResults,
