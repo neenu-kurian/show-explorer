@@ -75,11 +75,6 @@ export interface InfoChipProps {
   value?: string | number;
 }
 
-export interface SearchInputProps {
-  modelValue?: string;
-  placeholder?: string;
-}
-
 export interface SortOption {
   value: string;
   label: string;

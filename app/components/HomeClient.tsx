@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "./Card.tsx";
 import { useSearchShows } from "../queries/index.ts";
 import { Show } from "../types/index.ts";

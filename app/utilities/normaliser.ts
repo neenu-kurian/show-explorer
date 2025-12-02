@@ -16,8 +16,8 @@ export function categorizeShows(
       showsByCategory[genre].push(show);
     });
   });
-  sortShows(showsByCategory);
-  return showsByCategory;
+  const sortedShows = sortShows(showsByCategory);
+  return sortedShows;
 }
 
 export function normaliseSearchResults(

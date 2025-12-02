@@ -1,5 +1,5 @@
-"use client"
-import { useRef } from "react";
+"use client";
+import { useEffect, useRef } from "react";
 
 export const useObserverRef = (callback: () => void) => {
   const observer = useRef<IntersectionObserver | null>(null);
@@ -14,5 +14,10 @@ export const useObserverRef = (callback: () => void) => {
       observer.current.observe(node);
     }
   };
+  useEffect(() => {
+    return () => {
+      observer.current?.disconnect();
+    };
+  }, []);
   return setObserverRef;
 };
