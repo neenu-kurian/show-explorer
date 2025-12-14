@@ -58,8 +58,14 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
       </div>
     );
   }
-
   const renderSearchResults = () => {
+    if (isSearchLoading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-xl text-gray-600">Searching...</p>
+        </div>
+      );
+    }
     if (!searchResults) return null;
     if (searchResults.length === 0)
       return (

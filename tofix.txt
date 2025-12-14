@@ -1,0 +1,13 @@
+API helpers swallow HTTP errors and don’t encode queries. 
+fetchShowsByCategory
+, 
+fetchShowData
+, and 
+searchShows
+ call res.json() without checking res.ok, so HTTP 4xx/5xx responses become mysterious runtime errors. Additionally, 
+searchShows
+ interpolates the raw query string without encodeURIComponent, so searches containing spaces or reserved characters break. Add status checks and encode user input before building URLs. @app/api/index.ts#12-43
+
+
+
+ 

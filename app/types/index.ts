@@ -54,7 +54,7 @@ export interface Show {
   rating: Rating;
   image: Image | null;
   summary: string;
-  cast: CastMember[];
+  // cast: CastMember[];
 }
 
 export type CategorizedShows = {
