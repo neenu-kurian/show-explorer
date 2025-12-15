@@ -122,7 +122,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <div className="mx-4 px-4 py-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
           Movie Explorer

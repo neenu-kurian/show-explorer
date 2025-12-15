@@ -2,7 +2,7 @@ const SearchInput = ({ handleUpdate, searchText }: { handleUpdate: (query: strin
   return (
     <div
       role="search"
-      className="flex align-center gap-6 rounded-md border-transparent px-1 py-2 md:w-[60%] max-w-full bg-gray-100 width-full"
+      className="flex align-center gap-6 rounded-md border-transparent px-1 py-2 md:w-[60%] max-w-full width-full"
     >
       <input
         onChange={(e) => handleUpdate(e.currentTarget?.value)}
@@ -11,7 +11,7 @@ const SearchInput = ({ handleUpdate, searchText }: { handleUpdate: (query: strin
         value={searchText}
         aria-label="Search shows"
         placeholder="Search for shows..."
-        className="border-none outline-none bg-white w-full text-base text-black p-4 leading-none rounded-md mb-8"
+        className="border-none outline-none bg-gray-100 w-full text-base text-black p-4 leading-none rounded-md mb-8"
       />
     </div>
   );
