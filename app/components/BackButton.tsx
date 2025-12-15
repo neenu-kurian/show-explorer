@@ -5,7 +5,7 @@ const BackButton = () => {
   const router = useRouter();
   return (
     <div className="flex">
-      <GoArrowLeft className="relative top-1 right-2"/>
+      <GoArrowLeft aria-hidden="true" className="relative top-1 right-2" />
       <button onClick={() => router.back()}>Back to shows</button>
     </div>
   );

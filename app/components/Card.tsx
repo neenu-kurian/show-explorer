@@ -17,7 +17,7 @@ const Card = ({ name, rating, image, index }: Show & { index: number }) => {
             priority={index < 6}
           />
         ) : (
-          <BiImage className="object-cover" size={250} />
+          <BiImage aria-hidden="true" className="object-cover" size={250} />
         )}
         <div className="absolute top-4 left-4 z-10">
           {rating?.average && (

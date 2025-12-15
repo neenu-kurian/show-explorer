@@ -14,7 +14,6 @@ const HomePage = async () => {
     throw new Error(`Failed to fetch shows: ${response.status}`);
   }
   const data = await response.json() as Show[];
-   console.log('res',data);
 
   return <HomeClient shows={data} />;
 };

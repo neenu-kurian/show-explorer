@@ -54,7 +54,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
   if (searchError) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p className="text-xl text-red-600">Error loading shows</p>
+        <p role="status" aria-live="polite" className="text-xl text-red-600">Error loading shows</p>
       </div>
     );
   }
@@ -62,7 +62,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
     if (isSearchLoading) {
       return (
         <div className="flex justify-center items-center h-64">
-          <p className="text-xl text-gray-600">Searching...</p>
+          <p role="status" aria-live="polite" className="text-xl text-gray-600">Searching...</p>
         </div>
       );
     }
@@ -70,7 +70,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
     if (searchResults.length === 0)
       return (
         <div className="flex justify-center items-center h-64">
-          <p className="text-xl text-gray-600">No results found</p>
+          <p role="status" aria-live="polite" className="text-xl text-gray-600">No results found</p>
         </div>
       );
 

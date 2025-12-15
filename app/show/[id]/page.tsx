@@ -14,14 +14,14 @@ const MovieDetail = () => {
   if (error) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p className="text-xl text-red-600">Error loading show details</p>
+        <p role="status" aria-live="polite" className="text-xl text-red-600">Error loading show details</p>
       </div>
     );
   }
   if (isLoading || !show) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p className="text-xl text-gray-600">Loading...</p>
+        <p role="status" aria-live="polite" className="text-xl text-gray-600">Loading...</p>
       </div>
     );
   }
