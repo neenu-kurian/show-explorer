@@ -54,7 +54,9 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
   if (searchError) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p role="status" aria-live="polite" className="text-xl text-red-600">Error loading shows</p>
+        <p role="status" aria-live="polite" className="text-xl text-red-600">
+          Error loading shows
+        </p>
       </div>
     );
   }
@@ -62,7 +64,9 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
     if (isSearchLoading) {
       return (
         <div className="flex justify-center items-center h-64">
-          <p role="status" aria-live="polite" className="text-xl text-gray-600">Searching...</p>
+          <p role="status" aria-live="polite" className="text-xl text-gray-600">
+            Searching...
+          </p>
         </div>
       );
     }
@@ -70,7 +74,9 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
     if (searchResults.length === 0)
       return (
         <div className="flex justify-center items-center h-64">
-          <p role="status" aria-live="polite" className="text-xl text-gray-600">No results found</p>
+          <p role="status" aria-live="polite" className="text-xl text-gray-600">
+            No results found
+          </p>
         </div>
       );
 
@@ -123,17 +129,19 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
 
   return (
     <div className="min-h-screen">
-      <div className="mx-4 px-4 py-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-          Movie Explorer
+      <header className="sticky z-50 top-0 shadow-lg w-full bg-white/30 backdrop-blur-lg px-8 pt-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center mt-5">
+          TV Show Explorer
         </h1>
         <div className="flex justify-between">
           <SearchInput
             searchText={searchText}
             handleUpdate={updateSearchResults}
           />
-          <DropDown options={sortOptions} onDropDownChange={handleSortChange} />
+          <DropDown options={sortOptions} onDropDownChange={handleSortChange}/>
         </div>
+      </header>
+      <div className="mx-4 px-4 py-8">
         {searchText ? renderSearchResults() : renderShowsByGenre()}
         <div
           ref={setObserverRef}
