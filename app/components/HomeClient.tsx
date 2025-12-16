@@ -11,6 +11,7 @@ import { categorizeShows, sortShows } from "../utilities/normaliser.ts";
 import DropDown from "./DropDown.tsx";
 import { sortOptions } from "../constants.ts";
 import { useDebouncedValue } from "../hooks/useDebounce.ts";
+import ScrollableRow from "./ScrollableRow.tsx";
 
 const HomeClient = ({ shows }: { shows: Show[] }) => {
   const [itemsToShow, setItemsToShow] = useState(4);
@@ -110,17 +111,19 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
         {showsToDisplay.map(([genre, shows]) => (
           <div key={genre}>
             <h3 className="text-2xl font-bold mb-4">{genre}</h3>
-            <div className="flex flex-row gap-6 overflow-x-scroll">
-              {shows?.map((eachShow: Show) => (
-                <Link
-                  href={`/show/${eachShow.id}`}
-                  key={eachShow.id}
-                  className="relative"
-                >
-                  <Card {...eachShow} index={eachShow.id} />
-                </Link>
-              ))}
-            </div>
+            <ScrollableRow>
+              <div className="flex flex-row gap-6 overflow-x-scroll">
+                {shows?.map((eachShow: Show) => (
+                  <Link
+                    href={`/show/${eachShow.id}`}
+                    key={eachShow.id}
+                    className="relative"
+                  >
+                    <Card {...eachShow} index={eachShow.id} />
+                  </Link>
+                ))}
+              </div>
+            </ScrollableRow>
           </div>
         ))}
       </div>
@@ -138,7 +141,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
             searchText={searchText}
             handleUpdate={updateSearchResults}
           />
-          <DropDown options={sortOptions} onDropDownChange={handleSortChange}/>
+          <DropDown options={sortOptions} onDropDownChange={handleSortChange} />
         </div>
       </header>
       <div className="mx-4 px-4 py-8">

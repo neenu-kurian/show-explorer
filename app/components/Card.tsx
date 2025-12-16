@@ -6,7 +6,7 @@ import { sanitiseText } from "../utilities/sanitiseText.ts";
 
 const Card = ({ name, rating, image, index, summary }: Show & { index: number }) => {
   return (
-    <div className="border-gray-300 border rounded-md">
+    <div className="border-gray-300 border rounded-lg">
       <div className="bg-white relative h-[400px] w-[250px] rounded-lg shadow-lg overflow-hidden shrink-0">
         {image?.original ? (
           <Image
