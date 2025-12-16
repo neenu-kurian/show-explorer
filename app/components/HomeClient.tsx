@@ -112,7 +112,7 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
           <div key={genre}>
             <h3 className="text-2xl font-bold mb-4">{genre}</h3>
             <ScrollableRow>
-              <div className="flex flex-row gap-6 overflow-x-scroll">
+              <div className="flex flex-row gap-6">
                 {shows?.map((eachShow: Show) => (
                   <Link
                     href={`/show/${eachShow.id}`}
