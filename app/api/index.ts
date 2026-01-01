@@ -37,7 +37,7 @@ export async function fetchShowData(id: string): Promise<Show> {
 }
 
 export async function fetchCastData(
-  id: number
+  id: string
 ): Promise<CastMember[]> {
  try {
     const res = await fetch(`${API_URL}/shows/${id}/cast`);
@@ -67,3 +67,4 @@ export async function searchShows(
     throw err;
   }
 }
+

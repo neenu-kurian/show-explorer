@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchShowData, fetchShowsByCategory, searchShows } from "../api/index.ts";
+import { fetchShowData, fetchShowsByCategory, searchShows, fetchCastData } from "../api/index.ts";
 import { Show } from "../types/index.ts";
 
 export const useShowsByCategory = () => {
@@ -41,4 +41,17 @@ export const useSearchShows = ( query: string ) => {
     enabled: !!query?.trim(),
   });
   return { searchResults, isLoading, error };
+}
+
+export const useCast = (id: string) => {
+  const {
+    data: castDetails,
+    isLoading: castDetailsLoading,
+    error: castDetailsError
+  } = useQuery({
+    queryKey: ["cast", id],
+    queryFn: () => fetchCastData(id),
+    enabled: !!id?.trim(),
+  });
+  return { castDetails, castDetailsLoading, castDetailsError };
 }

@@ -6,7 +6,7 @@ export type Rating = {
   average: number | null;
 };
 
-export type CastMember = {
+export type CastMemberProps = {
   person: {
     id: number;
     name: string;
