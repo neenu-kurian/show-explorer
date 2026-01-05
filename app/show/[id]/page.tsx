@@ -38,7 +38,6 @@ const MovieDetail = () => {
             priority={true}
             className="rounded-xl overflow-hidden shadow-lg mx-left shrink-0"
             fill
-            unoptimized={true}
           />
         </div>
         <div className="absolute left-4 top-20">
