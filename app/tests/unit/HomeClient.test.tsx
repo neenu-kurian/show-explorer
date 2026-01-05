@@ -29,7 +29,7 @@ jest.mock("../../queries/index", () => ({
 
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({ priority, fill, unoptimized, ...props }) => <img {...props} />,
+  default: ({ priority, fill, ...props }) => <img {...props} />,
 }));
 
 jest.mock("next/link", () => ({
