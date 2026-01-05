@@ -8,9 +8,9 @@ const Card = ({
   name,
   rating,
   image,
-  index,
   summary,
-}: Show & { index: number }) => {
+  visualIndex,
+}: Show & { visualIndex: number }) => {
   return (
     <div className="border-gray-300 border rounded-lg">
       <div className="bg-white relative h-[400px] w-[250px] rounded-lg shadow-lg overflow-hidden shrink-0">
@@ -20,7 +20,7 @@ const Card = ({
             alt={name || "No image available"}
             fill
             className="object-cover hover:scale-105 transition-transform duration-300"
-            priority={index < 6}
+            priority={visualIndex < 6}
             quality={60}
             sizes="(max-width: 640px) 100vw,
                    (max-width: 1024px) 50vw,
