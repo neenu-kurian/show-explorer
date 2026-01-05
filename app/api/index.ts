@@ -1,6 +1,6 @@
 import type {
   CategorizedShows,
-  CastMember,
+  CastMemberProps,
   Show,
 } from "../types/index.ts";
 import { API_URL } from "../constants.ts";
@@ -38,7 +38,7 @@ export async function fetchShowData(id: string): Promise<Show> {
 
 export async function fetchCastData(
   id: string
-): Promise<CastMember[]> {
+): Promise<CastMemberProps[]> {
  try {
     const res = await fetch(`${API_URL}/shows/${id}/cast`);
     if (!res.ok) {
