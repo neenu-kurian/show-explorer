@@ -4,7 +4,13 @@ import Image from "next/image";
 import { BiImage } from "react-icons/bi";
 import { sanitiseText } from "../utilities/sanitiseText.ts";
 
-const Card = ({ name, rating, image, index, summary }: Show & { index: number }) => {
+const Card = ({
+  name,
+  rating,
+  image,
+  index,
+  summary,
+}: Show & { index: number }) => {
   return (
     <div className="border-gray-300 border rounded-lg">
       <div className="bg-white relative h-[400px] w-[250px] rounded-lg shadow-lg overflow-hidden shrink-0">
@@ -15,6 +21,10 @@ const Card = ({ name, rating, image, index, summary }: Show & { index: number })
             fill
             className="object-cover hover:scale-105 transition-transform duration-300"
             priority={index < 6}
+            quality={60}
+            sizes="(max-width: 640px) 100vw,
+                   (max-width: 1024px) 50vw,
+                   33vw"
           />
         ) : (
           <BiImage aria-hidden="true" className="object-cover" size={250} />

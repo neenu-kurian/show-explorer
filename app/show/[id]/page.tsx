@@ -36,6 +36,10 @@ const MovieDetail = () => {
             src={show.image?.original || ""}
             alt={show.name}
             priority={true}
+            quality={60}
+            sizes="(max-width: 640px) 100vw,
+                   (max-width: 1024px) 50vw,
+                   33vw"
             className="rounded-xl overflow-hidden shadow-lg mx-left shrink-0"
             fill
           />

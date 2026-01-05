@@ -93,9 +93,9 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
       <div className="mt-4">
         <h2 className="text-2xl font-bold mb-4">Search Results</h2>
         <div className="flex gap-5 flex-wrap">
-          {searchResults.map((show: Show) => (
+          {searchResults.map((show: Show, index: number) => (
             <Link href={`/show/${show.id}`} key={show.id}>
-              <Card {...show} index={show.id} />
+              <Card {...show} index={index} />
             </Link>
           ))}
         </div>
@@ -113,13 +113,13 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
             <h3 className="text-2xl font-bold mb-4">{genre}</h3>
             <ScrollableRow>
               <div className="flex flex-row gap-6">
-                {shows?.map((eachShow: Show) => (
+                {shows?.map((eachShow: Show, index: number) => (
                   <Link
                     href={`/show/${eachShow.id}`}
                     key={eachShow.id}
                     className="relative"
                   >
-                    <Card {...eachShow} index={eachShow.id} />
+                    <Card {...eachShow} index={index} />
                   </Link>
                 ))}
               </div>
