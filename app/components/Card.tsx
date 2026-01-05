@@ -14,7 +14,6 @@ const Card = ({ name, rating, image, index, summary }: Show & { index: number })
             alt={name || "No image available"}
             fill
             className="object-cover hover:scale-105 transition-transform duration-300"
-            unoptimized
             priority={index < 6}
           />
         ) : (
