@@ -13,13 +13,14 @@ const Card = ({
 }: Show & { visualIndex: number }) => {
   return (
     <div className="border-gray-300 border rounded-lg">
-      <div className="bg-white relative h-[400px] w-[250px] rounded-lg shadow-lg overflow-hidden shrink-0">
+      <div className="bg-white h-[400px] w-[250px] rounded-lg shadow-lg overflow-hidden shrink-0">
         {image?.original ? (
           <Image
             src={image?.original}
             alt={name || "No image available"}
-            fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
+            width={280}
+            height={400}
+            className="object-cover hover:scale-105 transition-transform duration-300 w-full h-full"
             priority={visualIndex < 6}
             quality={60}
             sizes="(max-width: 640px) 100vw,
