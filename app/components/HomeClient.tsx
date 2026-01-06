@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, lazy, Suspense } from "react";
 import Card from "./Card.tsx";
 import { useSearchShows } from "../queries/index.ts";
 import { Show } from "../types/index.ts";
@@ -7,11 +7,11 @@ import { useObserverRef } from "../hooks/useObserverRef.ts";
 import Link from "next/link";
 import SearchInput from "./SearchInput.tsx";
 import { categorizeShows, sortShows } from "../utilities/normaliser.ts";
-
-import DropDown from "./DropDown.tsx";
 import { sortOptions } from "../constants.ts";
 import { useDebouncedValue } from "../hooks/useDebounce.ts";
-import ScrollableRow from "./ScrollableRow.tsx";
+
+const DropDown = lazy(() => import("./DropDown.tsx"));
+const ScrollableRow = lazy(() => import("./ScrollableRow.tsx"));
 
 const HomeClient = ({ shows }: { shows: Show[] }) => {
   const [itemsToShow, setItemsToShow] = useState(4);
@@ -111,19 +111,21 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
         {showsToDisplay.map(([genre, shows]) => (
           <div key={genre}>
             <h3 className="text-2xl font-bold mb-4">{genre}</h3>
-            <ScrollableRow>
-              <div className="flex flex-row gap-6">
-                {shows?.map((eachShow: Show, visualIndex: number) => (
-                  <Link
-                    href={`/show/${eachShow.id}`}
-                    key={eachShow.id}
-                    className="relative"
-                  >
-                    <Card {...eachShow} visualIndex={visualIndex} />
-                  </Link>
-                ))}
-              </div>
-            </ScrollableRow>
+            <Suspense fallback={<div className="w-full h-64 bg-gray-200 rounded"></div>}>
+              <ScrollableRow>
+                <div className="flex flex-row gap-6">
+                  {shows?.map((eachShow: Show, visualIndex: number) => (
+                    <Link
+                      href={`/show/${eachShow.id}`}
+                      key={eachShow.id}
+                      className="relative"
+                    >
+                      <Card {...eachShow} visualIndex={visualIndex} />
+                    </Link>
+                  ))}
+                </div>
+              </ScrollableRow>
+            </Suspense>
           </div>
         ))}
       </div>
@@ -141,7 +143,9 @@ const HomeClient = ({ shows }: { shows: Show[] }) => {
             searchText={searchText}
             handleUpdate={updateSearchResults}
           />
-          <DropDown options={sortOptions} onDropDownChange={handleSortChange} />
+          <Suspense fallback={<div className="w-32 h-10 bg-gray-200 rounded"></div>}>
+            <DropDown options={sortOptions} onDropDownChange={handleSortChange} />
+          </Suspense>
         </div>
       </header>
       <div className="mx-4 px-4 py-8">
