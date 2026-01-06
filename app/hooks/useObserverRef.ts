@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-export const useObserverRef = (callback: () => void) => {
+export const useObserverRef = (callback: () => void): (node: HTMLDivElement | null) => void => {
   const observer = useRef<IntersectionObserver | null>(null);
   const setObserverRef = (node: HTMLDivElement | null) => {
     if (observer.current) observer.current.disconnect();

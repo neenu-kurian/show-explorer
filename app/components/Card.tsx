@@ -18,11 +18,11 @@ const Card = ({
           <Image
             src={image?.original}
             alt={name || "No image available"}
-            width={280}
+            width={250}
             height={400}
             className="object-cover hover:scale-105 transition-transform duration-300 w-full h-full"
             priority={visualIndex < 6}
-            quality={60}
+            quality={75}
             sizes="(max-width: 640px) 100vw,
                    (max-width: 1024px) 50vw,
                    33vw"
